@@ -1,0 +1,30 @@
+﻿<Window x:Class="BlobViz.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlobViz"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="750" Width="525">
+    <Grid>
+        <DockPanel Margin="10">
+            <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
+                <Label>W:</Label>
+                <TextBox Name="ImageWidth" Width="50" Margin="0,0,10,0"></TextBox>
+                <Label>H:</Label>
+                <TextBox Name="ImageHeight" Width="50" Margin="0,0,10,0"></TextBox>
+                <Button Name="btnOpenFile" Click="btnOpenFile_Click">Open file</Button>
+            </WrapPanel>
+
+            <WrapPanel HorizontalAlignment="Left" DockPanel.Dock="Top" Margin="0,0,0,10">
+                <Image Name="ImageContainer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="512" Height="512" />
+            </WrapPanel>
+
+            <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
+                <TextBox Name="BufferFormatString" Width="510" Height="50">
+                    float:4; float:4;
+                </TextBox>
+            </WrapPanel>
+        </DockPanel>
+    </Grid>
+</Window>
