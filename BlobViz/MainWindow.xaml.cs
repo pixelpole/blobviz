@@ -28,6 +28,8 @@ namespace BlobViz
 
             public abstract byte read(int idx);
             public abstract void preProcessData(byte[] data, int offset, int stride);
+
+            public abstract DataType CreateInstance();
         }
 
         private class DataFormatReader
@@ -69,14 +71,23 @@ namespace BlobViz
 
             public uint read(int idx)
             {
-                uint color = 0xff000000;
-                int currDist = 0;
+                uint[] colors = new uint[3] { 0x00, 0x00, 0x00 };
+                int colorIdx = 0;
 
+                if (idx == 512)
+                {
+                }
                 foreach(DataType t in m_dataTypes)
                 {
-                    color |= (uint)((int)(t.read(idx)) << currDist);
-                    currDist += 8;
+                    colors[colorIdx++] = t.read(idx);
                 }
+
+                uint color = 0xff000000;
+                color |= colors[2] << 0; //B
+                color |= colors[1] << 8; //G
+                color |= colors[0] << 16; //R
+
+                //Console.WriteLine("Hex: {0:X}", color);
 
                 return color;
             }
@@ -93,6 +104,11 @@ namespace BlobViz
             {
                 this.Name = "float" + numBytes;
                 this.NumBytes = numBytes;
+            }
+
+            public override DataType CreateInstance()
+            {
+                return new DataTypeFloat(this.NumBytes);
             }
 
             public override void preProcessData(byte[] data, int offset, int stride)
@@ -172,7 +188,7 @@ namespace BlobViz
                 {
                     if (typeName.Equals(t.Name))
                     {
-                        reader.addType(t);
+                        reader.addType(t.CreateInstance());
                         break;
                     }
                 }
